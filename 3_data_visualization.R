@@ -59,7 +59,10 @@ ggplot(data=mpg) +
 
 # 3.6 Geometric objects
 # geom: グラフの形を規定する（ex:散布図geom_point, 回帰geom_smooth）
-
+# 変数の要素ごとに回帰線を描画：  linetype
+# ex
+ggplot(data=mpg) +
+  geom_smooth(mapping=aes(x=displ, y=hwy, linetype=drv))
 
 
 
