@@ -60,14 +60,45 @@ ggplot(data=mpg) +
 # 3.6 Geometric objects
 # geom: グラフの形を規定する（ex:散布図geom_point, 回帰geom_smooth）
 # 変数の要素ごとに回帰線を描画：  linetype
-# ex
+# ex) 「drv」の要素ごとに回帰線を描画する
 ggplot(data=mpg) +
   geom_smooth(mapping=aes(x=displ, y=hwy, linetype=drv))
 
+# 1本の回帰線を描画
+ggplot(data=mpg) +
+  geom_smooth(mapping=aes(x=displ, y=hwy))
+# groupの要素ごとに線を描画
+ggplot(data=mpg) +
+  geom_smooth(mapping=aes(x=displ, y=hwy, group=drv))
+# 指定したデータごとに色分け
+ggplot(data=mpg) +
+  geom_smooth(mapping=aes(x=displ, y=hwy, color=drv),
+  show.legend= FALSE
+  )
+# 2種類のグラフを重ね合わせる
+ggplot(data=mpg) +
+  geom_point(mapping=aes(x=displ, y=hwy)) +
+  geom_smooth(mapping=aes(x=displ, y=hwy))
+# ggplotの部分に描くグラフのデータを記述してしまう
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy))+
+  geom_point()+
+  geom_smooth()
+# 指定したカテゴリごとに色分けする
+ggplot(data=mpg, mapping=aes(x=displ, y=hwy))+
+  geom_point(mapping=aes(color=class))+
+  geom_smooth()
+# プロット中の一部のカテゴリにのみ回帰線を描く
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
+  geom_point(mapping = aes(color = class)) + 
+  geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
 
 
-
-
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+  geom_point() + 
+  geom_smooth(se = TRUE,
+  show.legend = TRUE
+  )
+# se -> 信頼区間を描く：TRUE、描かない：FALSE
 
 
 
