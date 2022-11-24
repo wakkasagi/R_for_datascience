@@ -1,5 +1,26 @@
 library(tidyverse)
 
+# 小技：Alt + "-"で <- 一発入力
+
+# ggplotの使い方
+# ggplot(data = hoge)で空の座標を作る。"+"で表現したいグラフの種類を追加していく
+#テンプレートは、ggplot(data = <DATA>) +<GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+# ex）自動車データ（mpg）におけるエンジンサイズと燃費の関係を散布図として表現
+ggplot(data=mpg) +
+  geom_point(mapping=aes(x=displ, y=hwy))
+
+# データの詳細は、データセットの先頭に?を入れることで見られる
+# ex
+?mpg
+
+# Make a scatterplot of hwy vs cyl
+ggplot(data=mpg) +
+  geom_point(mapping=aes(x=hwy, y=cyl))
+
+# What happens if you make a scatterplot of class vs drv? Why is the plot not useful?
+ggplot(data=mpg) +
+  geom_point(mapping=aes(x=class, y=drv))
+
 # プロットの色を変える
 ggplot(data=mpg) +
   geom_point(mapping=aes(x=displ, y=hwy), color="blue")
