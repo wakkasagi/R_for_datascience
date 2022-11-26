@@ -114,20 +114,39 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
   geom_smooth(data = filter(mpg, class == "subcompact"), se = FALSE)
 
 
-ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) + 
+ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) + 
   geom_point() + 
   geom_smooth(se = TRUE,
   show.legend = TRUE
   )
-# se -> 信頼区間を描く：TRUE、描かない：FALSE
 
+#exercises 6
+#1
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+#2
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, group=drv)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+#3
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, color=drv)) +
+  geom_point() +
+  geom_smooth(se=FALSE, show.legend=TRUE)
+#4
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy)) +
+  geom_point(mapping=aes(color=drv)) +
+  geom_smooth(se=FALSE, show.legend=FALSE)
+#5
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy)) +
+  geom_point(mapping=aes(color=drv)) +
+  geom_smooth(mapping=aes(linetype=drv), se=FALSE, show.legend=TRUE)
 
+#6
+ggplot(data=mpg, mapping = aes(x=displ, y=hwy, fill=drv)) +
+  geom_point(shape=21, color="white")
 
-
-
-
-
-
-
+# 3.7 Statistical transformations
+# 棒グラフなどは、x軸を指定すれば勝手にカウントをy軸に指定する
 
 
