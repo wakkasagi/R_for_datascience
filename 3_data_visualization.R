@@ -1,6 +1,8 @@
 library(tidyverse)
 
 # 小技：Alt + "-"で <- 一発入力
+# 小技：複数行選択でctrl＋shift＋Cすると複数行コメントアウト
+# 小技：Alt+shift+Kでキーバインドをすべて表示
 
 # ggplotの使い方
 # ggplot(data = hoge)で空の座標を作る。"+"で表現したいグラフの種類を追加していく
@@ -120,6 +122,54 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy, color = drv)) +
   show.legend = TRUE
   )
 # se -> 信頼区間を描く：TRUE、描かない：FALSE
+
+
+# 3.7 Statistical transformations
+# geom_bar xを指定すると勝手に縦軸をカウントにする
+# dataset->diamonds x軸 
+# geom_barが呼ばれると、xに指定された列毎の要素数を集計して新しいテーブルを作り、それに基づく棒グラフを生成する
+ggplot(data = diamonds) +
+  geom_bar(mapping = aes(x=cut))
+
+# yが既に数値として与えられているときは、yの値を生の値に変更する（stat="identityを指定）。これをしないと、x軸の要素数を出力するので、すべて1になる（列の各要素がひとつずつ値を持つため）
+# tribbleは、表形式でデータを与えられる関数。~xxxで列名、その下に各要素を追加していけば良い。小さいデータセットを作るときに使える
+demo <- tribble(
+  ~cut,         ~freq,
+  "Fair",       1610,
+  "Good",       4906,
+  "Very Good",  12082,
+  "Premium",    13791,
+  "Ideal",      21551
+)
+ggplot(data = demo) +
+  geom_bar(mapping = aes(x = cut, y = freq), stat="identity")
+ggplot(data=demo) +
+  geom_col(mapping = aes(x=cut, y=freq))
+
+# カウントではなく、比率を縦軸に指定する（）
+ggplot(data=diamonds) +
+  geom_bar(mapping=aes(x=cut, y=stat(prop), group = 1))
+
+# データの取り得る値と中央値をプロットする(stat_summary)
+ggplot(data=diamonds) +
+  stat_summary(
+    mapping = aes(x=cut, y=depth),
+    fun.min = min,
+    fun.max = max,
+    fun = median
+  )
+
+# after_statは何を出力してる？？
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, y = after_stat(prop)))
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = color, y = after_stat(prop)))
+
+# 3.8 Position adjustments
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = cty, y = hwy), position="jitter")
+
 
 
 
