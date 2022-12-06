@@ -172,12 +172,16 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = cty, y = hwy), position="jitter")
 
 
+# 4.1 Coding basics
+this_is_a_really_long_name <- 2.5
 
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy))
 
+fliter(mpg, cyl = 8)
+filter(diamond, carat > 3)
 
-
-
-
+?mpg
 
 
 
