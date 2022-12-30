@@ -216,9 +216,23 @@ batters %>%
 batters %>% 
   arrange(desc(ba))
 
+# 5.6.4 useful summary functions
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  summarise(
+    avg_delay1 = mean(arr_delay),
+    avg_delay2 = mean(arr_delay[arr_delay>0])
+  )
 
+# ‚È‚º‚¢‚­‚Â‚©‚Ì–Ú“I’n‚Ö‚Ì‹——£‚Í‘¼‚Ì•Ï”‚æ‚è‚à•Ï“®‚ª‚ ‚é‚Ì‚©H
+not_cancelled %>% 
+  group_by(dest) %>% 
+  summarise(distance_sd = sd(distance)) %>% 
+  arrange(desc(distance_sd))
 
-
-
+not_cancelled %>% 
+  group_by(year, month, day) %>% 
+  mutate(r = min_rank(desc(dep_time))) %>% 
+  filter(r %in% range(r))
 
 
